@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!--
+          ~ Copyright (c) 2020 Deepesh Patel
+          ~
+          ~ This file is part of JNumberTools Examples.
+          ~ JNumberTools is free software: you can redistribute it and/or modify
+          ~ it under the terms of the GNU Lesser General Public License as published by
+          ~ the Free Software Foundation, either version 3 of the License, or any
+          ~ later version.
+          ~
+          ~ This program is distributed in the hope that it will be useful,
+          ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+          ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+          ~ See the GNU Lesser General Public License for more details.
+          ~
+          ~ You should have received a copy of the GNU Lesser General Public License
+          ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
+          -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.deepeshpatel</groupId>
+    <artifactId>jnumbertools-examples</artifactId>
+    <version>4.0.0</version>
+
+    <packaging>jar</packaging>
+
+    <name>JNumberTools Examples</name>
+    <url>https://github.com/deepeshpatel/JNumberToolsExamples</url>
+    <description>
+        Example applications demonstrating JNumberTools,
+        a Java library for combinatorics and number systems.
+    </description>
+
+
+    <licenses>
+        <license>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE v3</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Minimum supported Java version. Compiled with the compiler release option, so newer JDK APIs cannot be used by mistake. -->
+        <maven.compiler.release>21</maven.compiler.release>
+        <junit.version>5.11.4</junit.version>
+    </properties>
+
+    <developers>
+        <developer>
+            <name>Deepesh Patel</name>
+            <email>patel.deepesh@gmail.com</email>
+            <organizationUrl>https://github.com/deepeshpatel</organizationUrl>
+            <roles>
+                <role>Maintainer</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+5:30</timezone>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>
+            scm:git:git://github.com/deepeshpatel/JNumberToolsExamples.git
+        </connection>
+        <developerConnection>
+            scm:git:ssh://github.com/deepeshpatel/JNumberToolsExamples.git
+        </developerConnection>
+        <url>https://github.com/deepeshpatel/JNumberToolsExamples</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/deepeshpatel/jnumbertoolsexamples/issues</url>
+    </issueManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.deepeshpatel</groupId>
+            <artifactId>jnumbertools</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.3</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--
+          Release profile: builds the source and javadoc jars, signs all artifacts and publishes to
+          Maven Central through the Central Publisher Portal.
+
+            mvn clean deploy -Prelease
+
+          Requires (outside this file):
+            - a Central Portal user token in ~/.m2/settings.xml under <server><id>central</id>
+            - a GPG key available to the gpg plugin
+          Ordinary builds (mvn test, mvn verify, mvn install) do not need either.
+        -->
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.12.0</version>
+                        <configuration>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <release>${maven.compiler.release}</release>
+                            <overview>${project.basedir}/src/main/javadoc/overview.html</overview>
+                            <!-- Fail the release on malformed javadoc HTML. Missing comments are not reported. -->
+                            <doclint>all,-missing</doclint>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.7</version>
+                        <configuration>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.12.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <!-- Upload only; review and press Publish in the Central Portal. Set true to publish automatically. -->
+                            <autoPublish>false</autoPublish>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
