@@ -1,0 +1,21 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Build and test (forces a fresh resolve of jnumbertools from Maven Central)
+        run: mvn -B -U clean verify
+      - name: Run all examples
+        run: mvn -B -q exec:java -Dexec.args="all"

@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!--
-          ~ Copyright (c) 2020 Deepesh Patel
-          ~
-          ~ This file is part of JNumberTools Examples.
-          ~ JNumberTools is free software: you can redistribute it and/or modify
-          ~ it under the terms of the GNU Lesser General Public License as published by
-          ~ the Free Software Foundation, either version 3 of the License, or any
-          ~ later version.
-          ~
-          ~ This program is distributed in the hope that it will be useful,
-          ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-          ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-          ~ See the GNU Lesser General Public License for more details.
-          ~
-          ~ You should have received a copy of the GNU Lesser General Public License
-          ~ along with this program. If not, see <https://www.gnu.org/licenses/>.
-          -->
+<!--
+  ~ Copyright (c) 2020-2026 Deepesh Patel
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -38,8 +25,8 @@
 
     <licenses>
         <license>
-            <name>GNU LESSER GENERAL PUBLIC LICENSE v3</name>
-            <url>https://www.gnu.org/licenses/lgpl-3.0.html</url>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -49,6 +36,11 @@
         <!-- Minimum supported Java version. Compiled with the compiler release option, so newer JDK APIs cannot be used by mistake. -->
         <maven.compiler.release>21</maven.compiler.release>
         <junit.version>5.11.4</junit.version>
+
+        <!-- The only place the library version is declared. -->
+        <jnumbertools.version>4.0.1</jnumbertools.version>
+
+        <exec.mainClass>io.github.deepeshpatel.jnumbertools.examples.Main</exec.mainClass>
     </properties>
 
     <developers>
@@ -95,7 +87,7 @@
         <dependency>
             <groupId>io.github.deepeshpatel</groupId>
             <artifactId>jnumbertools</artifactId>
-            <version>4.0.0</version>
+            <version>${jnumbertools.version}</version>
         </dependency>
 
     </dependencies>
@@ -116,6 +108,20 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.3</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <jnumbertools.version>${jnumbertools.version}</jnumbertools.version>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <mainClass>${exec.mainClass}</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
