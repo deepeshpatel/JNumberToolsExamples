@@ -58,6 +58,19 @@ Ranking and number systems
 - [x] Tests: keep exactly one seed-pinned canary (poker deal), everything else property based
 - [ ] First release: set `1.0.0` (no SNAPSHOT) before `mvn clean deploy -Prelease`
 
+## Tour and use cases ported from the old in-library examples
+Tour (API areas)
+- [x] `tour/NumberSystems`: factoradic, combinadic, derangadic, every printed claim recomputed
+- [x] `tour/Sampling`: `choice` (with replacement) vs `sample` (distinct)
+- [x] `tour/Selections`: ordered or not, with or without repetition, plus multiset
+- [x] `tour/ConstrainedProducts`: the pizza example, counted, listed and jumped into
+Use cases
+- [x] `usecases/scheduling/RoundRobinTournament`: a valid round-robin schedule, checked against the library's pairings
+- [x] `usecases/statistics/DiceSimulation`: exact distribution by enumeration vs a seeded simulation
+Not ported yet
+- [ ] Stratified survey sampling, PowerBall (combination x single pick), pairwise coverage of an every-Mth subset, stream integration
+Dropped on purpose: the templated "product of invented lists" examples, the timing benchmark, and the old "pairwise" example (it was not pairwise).
+
 ## Optional
 - [ ] Encode a subset as one integer with `combinadic` (`numberSystem().combinadic(..)`)
 
