@@ -44,11 +44,22 @@ class CommitteeSelectionTest {
     }
 
     @Test
-    void shortlistIsReproducibleAndDistinct() {
+    void shortlistIsReproducibleDistinctAndFreeOfConflicts() {
         var shortlist = CommitteeSelection.randomShortlist(3, 42);
         assertEquals(shortlist, CommitteeSelection.randomShortlist(3, 42));
+        assertEquals(3, shortlist.size());
         assertEquals(3, new HashSet<>(shortlist).size());
-        assertEquals(List.of(List.of("E2", "E3", "D1", "M3"), List.of("E3", "E5", "D1", "M2"),
-                List.of("E2", "E5", "D2", "M1")), shortlist);
+        assertTrue(shortlist.stream().allMatch(CommitteeSelection::hasNoConflict));
+    }
+
+    @Test
+    void shortlistOfEveryValidCommitteeIsAShuffleOfThem() {
+        var valid = CommitteeSelection.validCommittees();
+        for (long seed = 0; seed < 20; seed++) {
+            var shortlist = CommitteeSelection.randomShortlist(valid.size(), seed);
+            assertEquals(valid.size(), shortlist.size());
+            assertEquals(new HashSet<>(valid), new HashSet<>(shortlist));
+        }
+        assertEquals(valid.size(), CommitteeSelection.randomShortlist(1000, 1).size());
     }
 }

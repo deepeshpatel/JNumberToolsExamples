@@ -18,4 +18,4 @@ jobs:
       - name: Build and test (forces a fresh resolve of jnumbertools from Maven Central)
         run: mvn -B -U clean verify
       - name: Run all examples
-        run: mvn -B -q exec:java -Dexec.args="all"
+        run: mvn -B -q compile exec:java -Dexec.args="all"

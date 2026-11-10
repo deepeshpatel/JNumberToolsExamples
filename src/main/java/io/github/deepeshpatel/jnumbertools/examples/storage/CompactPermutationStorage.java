@@ -77,7 +77,7 @@ public final class CompactPermutationStorage {
         System.out.println("Orderings of 52 cards     : " + JNumberTools.permutations().unique(52).count());
         System.out.println("Rank of this deck         : " + rank);
         System.out.println("Rank in base 36           : " + rank.toString(36));
-        System.out.println("Bits needed               : " + rank.bitLength() + " (a 52-byte array uses 416)");
+        System.out.println("Bits needed               : " + rank.bitLength() + " (one byte per card uses 416, six bits per card 312)");
         System.out.println("Restored deck is identical: " + Arrays.equals(order, restored));
     }
 

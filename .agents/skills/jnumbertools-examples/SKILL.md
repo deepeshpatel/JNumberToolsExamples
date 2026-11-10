@@ -7,7 +7,7 @@ description: Project-specific guidance for AI assistants adding, reviewing, or m
 
 ## 1. Purpose of this repository
 
-1. Showcase JNumberTools on real-life scenarios, each small, runnable and readable.
+Showcase JNumberTools (the published artifact `io.github.deepeshpatel:jnumbertools:4.0.1`) on real-life scenarios, each small, runnable and readable.
 
 This repository is a *consumer* of the library. Never copy library source here, never depend on library internals, never use `SNAPSHOT` or `systemPath` dependencies.
 
@@ -51,9 +51,9 @@ Rules between dimensions (for example "Safari only on macOS") are not a library 
 
 ## 5. Tests
 
-- `src/test/java` is required: it is what proves the dependency works.
-- `DependencyVersionTest` asserts that the `jnumbertools` jar on the classpath reports the version in `pom.xml` (via its `META-INF/maven/.../pom.properties`).
-- One smoke test per example asserts deterministic facts (counts, first/last element, a known rank). Do not snapshot entire outputs.
+- `src/test/java` is required. The tests keep the examples honest: they catch API drift when `jnumbertools.version` is bumped, wrong numbers in an example's own logic, and a README that no longer matches the registry.
+- Each example has a test class asserting deterministic facts and properties (counts, first/last element, a known rank, round trips, no duplicates, gapless coverage). Do not snapshot entire outputs.
+- Do not pin seeded `sample`/`choice` output: that tests the library's algorithm, not the example. The one deliberate exception is the canary `PokerHandsTest.dealIsReproducible`; if a library upgrade changes it, update it and the README together.
 - Tests call the example's result method, not `main`.
 
 ## 6. Verification

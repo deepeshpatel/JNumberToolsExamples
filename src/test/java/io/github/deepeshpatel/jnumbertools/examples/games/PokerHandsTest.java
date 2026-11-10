@@ -53,6 +53,11 @@ class PokerHandsTest {
         assertEquals(List.of("AS", "2H", "3D", "4C", "5S"), PokerHands.names(List.of(12, 13, 27, 41, 3)));
     }
 
+    /**
+     * The only test that pins seeded library output, on purpose: it is a canary for the library's
+     * {@code sample} algorithm. If a library upgrade changes it, update this test and the README output
+     * together; nothing is wrong with the example.
+     */
     @Test
     void dealIsReproducible() {
         List<Integer> hand = PokerHands.deal(42);

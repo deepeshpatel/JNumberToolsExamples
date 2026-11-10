@@ -19,7 +19,7 @@ Target: JNumberTools **4.0.1** from Maven Central (fallback: 4.0.0 if 4.0.1 cann
 ## Chunk 3: Bootstrap and dependency proof
 - [x] `Example` record, `Examples` registry and `Main` runner (list / run ids / `all`)
 - [x] `basics/QuickTour` (first example: one call per generator family)
-- [x] `DependencyVersionTest` (library is loaded from `jnumbertools-<pom version>.jar`)
+- [x] ~~`DependencyVersionTest`~~ dropped; the CI build with `mvn -U` is the dependency check
 - [x] `ExamplesSmokeTest` and `QuickTourTest`
 - [x] CI: GitHub Actions workflow running `mvn -B -U clean verify` and all examples on Java 21
 - [ ] Local check: JUnit tests actually executed with Maven (not yet run; sandbox has no Maven Central access)
@@ -49,6 +49,14 @@ Ranking and number systems
 - [x] `src/main/javadoc/overview.html` (needed by the release profile's javadoc step)
 - [x] `ReadmeTest` keeps README and registry in step
 - [ ] Final check: clean clone, `mvn -U clean verify`, `mvn -P release` dry run, all examples run
+
+## Review follow-ups
+- [x] `Main`: friendly error and exit status 1 for an unknown id, `all` anywhere runs everything, `MainTest`; docs use `mvn -q compile exec:java` (exec:java alone does not compile)
+- [x] `CommitteeSelection`: shortlist respects the conflict rule
+- [x] `AbTestDesign`: SHA-256 with an experiment name instead of `String.hashCode`
+- [x] Docs: remove references to the dropped `DependencyVersionTest`, lottery "rank" wording, fair storage comparison, dead surefire property
+- [x] Tests: keep exactly one seed-pinned canary (poker deal), everything else property based
+- [ ] First release: set `1.0.0` (no SNAPSHOT) before `mvn clean deploy -Prelease`
 
 ## Optional
 - [ ] Encode a subset as one integer with `combinadic` (`numberSystem().combinadic(..)`)

@@ -54,9 +54,16 @@ public final class CommitteeSelection {
         return builder().lexOrder().stream().filter(CommitteeSelection::hasNoConflict).toList();
     }
 
-    /** @return {@code n} distinct random committees (reproducible); conflicts are not excluded here */
+    /**
+     * @return up to {@code n} distinct random committees without the conflict (reproducible).
+     * {@code sample} cannot know the conflict rule, so it draws the whole space (120 committees,
+     * small enough) in random order and the rule filters it; the first {@code n} survivors are kept.
+     */
     public static List<List<Object>> randomShortlist(int n, long seed) {
-        return builder().sample(n, new Random(seed)).stream().toList();
+        return builder().sample(committeeCount().intValueExact(), new Random(seed)).stream()
+                .filter(CommitteeSelection::hasNoConflict)
+                .limit(n)
+                .toList();
     }
 
     public static void run() {

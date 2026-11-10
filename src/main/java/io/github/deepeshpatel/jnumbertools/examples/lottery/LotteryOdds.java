@@ -78,8 +78,8 @@ public final class LotteryOdds {
         System.out.println();
         int[] mine = {7, 14, 21, 28, 35, 42};
         BigInteger rank = rankOfTicket(mine);
-        System.out.println("Ticket " + Arrays.toString(mine) + " is number " + rank + " of " + ticketCount());
-        System.out.println("Ticket number 10000000 is " + ticketAtRank(BigInteger.valueOf(10_000_000)));
+        System.out.println("Ticket " + Arrays.toString(mine) + " has rank " + rank + " (counting from 0) among " + ticketCount() + " tickets");
+        System.out.println("The ticket with rank 10000000 is " + ticketAtRank(BigInteger.valueOf(10_000_000)));
         System.out.println("Quick pick (seed 42): " + quickPick(42));
     }
 

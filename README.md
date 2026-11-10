@@ -5,10 +5,7 @@
 
 Real-life, runnable examples of [JNumberTools](https://github.com/deepeshpatel/JNumberTools), an open-source Java library for combinatorics and number systems.
 
-This repository has two purposes:
-
-1. **Prove the dependency.** It uses the published `io.github.deepeshpatel:jnumbertools:4.0.1` artifact from Maven Central as a plain dependency, nothing else. `DependencyVersionTest` fails unless the library is loaded from `jnumbertools-<version>.jar` of the version declared in [pom.xml](pom.xml), and CI builds with `mvn -U` to force a fresh resolve.
-2. **Showcase the library** on realistic problems: test matrices, work partitioning, lottery odds, Secret Santa, compact storage of orderings and more.
+It showcases the library on realistic problems: test matrices, work partitioning, lottery odds, Secret Santa, compact storage of orderings and more. It uses the published `io.github.deepeshpatel:jnumbertools:4.0.1` artifact from Maven Central as a plain dependency, nothing else, and CI builds with `mvn -U` to force a fresh resolve.
 
 ## Dependency
 
@@ -30,10 +27,10 @@ The version is declared once, in the `jnumbertools.version` property of [pom.xml
 ## Run
 
 ```
-mvn -U clean verify                          # build and run the tests
-mvn -q exec:java                             # list the examples
-mvn -q exec:java -Dexec.args="poker-hands"   # run one example
-mvn -q exec:java -Dexec.args="all"           # run every example
+mvn -U clean verify                                  # build and run the tests
+mvn -q compile exec:java                             # list the examples
+mvn -q compile exec:java -Dexec.args="poker-hands"   # run one example
+mvn -q compile exec:java -Dexec.args="all"           # run every example
 ```
 
 Every example is also a plain class with a `main` method, so it runs from any IDE.
@@ -156,8 +153,8 @@ Exactly 5 matches: 0.001845%
 Exactly 4 matches: 0.096862%
 Exactly 3 matches: 1.765040%
 
-Ticket [7, 14, 21, 28, 35, 42] is number 8391494 of 13983816
-Ticket number 10000000 is [9, 19, 32, 34, 35, 46]
+Ticket [7, 14, 21, 28, 35, 42] has rank 8391494 (counting from 0) among 13983816 tickets
+The ticket with rank 10000000 is [9, 19, 32, 34, 35, 46]
 Quick pick (seed 42): [10, 12, 14, 17, 20, 34]
 ```
 
@@ -173,7 +170,7 @@ Shuffled deck (seed 42), first 8 cards: 3H AC 9D TD 7D 2S 9H 5S
 Orderings of 52 cards     : 80658175170943878571660636856403766975289505440883277824000000000000
 Rank of this deck         : 24443007826809818884276771602767457113196962187470522132311676778611
 Rank in base 36           : 2xjq30tm7kh915newezu1xbgz5zaqq5utnuu9yftee7n
-Bits needed               : 224 (a 52-byte array uses 416)
+Bits needed               : 224 (one byte per card uses 416, six bits per card 312)
 Restored deck is identical: true
 ```
 
@@ -290,11 +287,12 @@ Source: [`experiments/AbTestDesign.java`](src/main/java/io/github/deepeshpatel/j
 ```
 Variants: 18 (3 headlines x 3 buttons x 2 layouts)
 
-Visitor user-1 always sees [Save money, blue, two-column]
-Visitor user-2 always sees [Save money, orange, single-column]
-Visitor alice@example.com always sees [Save money, green, two-column]
+Visitor user-1 always sees [Save time, green, single-column]
+Visitor user-2 always sees [Save time, green, two-column]
+Visitor alice@example.com always sees [Save money, orange, two-column]
+Same visitor, another experiment (checkout-2026): user-1 sees [Save time, blue, two-column]
 
-1800 visitors over 18 variants: fewest 98, most 102 (ideal 100 each)
+1800 visitors over 18 variants: fewest 84, most 118 (ideal 100 each; some random spread is normal)
 
 Pilot with six distinct variants (seed 42):
   [Save money, blue, single-column]
