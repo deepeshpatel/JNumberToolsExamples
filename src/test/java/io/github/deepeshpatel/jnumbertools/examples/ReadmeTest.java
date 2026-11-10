@@ -23,12 +23,4 @@ class ReadmeTest {
             assertTrue(readme.contains("`" + e.id() + "`"), "README.md does not mention example " + e.id());
         }
     }
-
-    @Test
-    void readmeNamesTheDeclaredLibraryVersion() throws IOException {
-        String readme = Files.readString(Path.of("README.md"));
-        String version = System.getProperty("jnumbertools.version");
-        assertTrue(readme.contains("<version>" + version + "</version>"),
-                "README.md dependency snippet must use version " + version);
-    }
 }

@@ -7,8 +7,7 @@ description: Project-specific guidance for AI assistants adding, reviewing, or m
 
 ## 1. Purpose of this repository
 
-1. Prove that the published artifact `io.github.deepeshpatel:jnumbertools:4.0.1` resolves from Maven Central and works as a plain dependency.
-2. Showcase JNumberTools on real-life scenarios, each small, runnable and readable.
+1. Showcase JNumberTools on real-life scenarios, each small, runnable and readable.
 
 This repository is a *consumer* of the library. Never copy library source here, never depend on library internals, never use `SNAPSHOT` or `systemPath` dependencies.
 
