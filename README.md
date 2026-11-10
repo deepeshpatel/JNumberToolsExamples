@@ -51,6 +51,15 @@ Every example is also a plain class with a `main` method, so it runs from any ID
 | `poker-hands` | [Poker hand odds](src/main/java/io/github/deepeshpatel/jnumbertools/examples/games/PokerHands.java) | `combinations().unique(52, 5)`, `lexOrder`, `sample`, `count` |
 | `committee-selection` | [Committee selection](src/main/java/io/github/deepeshpatel/jnumbertools/examples/hr/CommitteeSelection.java) | `cartesianProduct().constrainedProductOfDistinct(..).andDistinct(..)`, `lexOrder`, `sample`, `count` |
 | `ab-test-design` | [A/B/n experiment design](src/main/java/io/github/deepeshpatel/jnumbertools/examples/experiments/AbTestDesign.java) | `cartesianProduct().simpleProductOf`, `byRanks`, `sample`, `count` |
+| `number-systems` | [Number systems tour](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/NumberSystems.java) | `numberSystem().factoradic`, `.combinadic`, `.derangadic`, `unrankOf().permutation()`, `derangements().of(..).byRanks` |
+| `sampling` | [Sampling: choice versus sample](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/Sampling.java) | `permutations().repetitive`, `choice`, `sample`, `count` |
+| `selections` | [Selections: four ways to pick](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/Selections.java) | `permutations().nPk`, `permutations().repetitive`, `combinations().unique`, `combinations().repetitive`, `combinations().multiset` |
+| `constrained-products` | [Constrained products: the pizza](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/ConstrainedProducts.java) | `cartesianProduct().constrainedProductOfDistinct(..).andDistinct(..).andInRange(..)`, `lexOrderMth`, `byRanks`, `count` |
+| `round-robin-tournament` | [Round-robin tournament](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/scheduling/RoundRobinTournament.java) | `combinations().unique(2, teams)`, `lexOrder`, `count` |
+| `dice-simulation` | [Dice simulation](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/statistics/DiceSimulation.java) | `permutations().repetitive`, `lexOrder`, `choice` |
+| `powerball` | [PowerBall tickets](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/lottery/PowerBall.java) | `cartesianProduct().constrainedProductOfDistinct(5, ..).andDistinct(1, ..)`, `byRanks`, `sample`, `Calculator.nCr` |
+| `stratified-survey` | [Stratified survey sample](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/statistics/StratifiedSurvey.java) | `cartesianProduct().constrainedProductOfDistinct(..).andDistinct(..)`, `combinations().unique`, `sample`, `choice` |
+| `subset-encoding` | [Subset encoding](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/storage/SubsetEncoding.java) | `numberSystem().combinadic`, `combinations().unique`, `Calculator.nCr` |
 
 All outputs below were produced by running the examples. Random choices use a fixed seed, so the output is reproducible.
 
@@ -301,6 +310,209 @@ Pilot with six distinct variants (seed 42):
   [Join today, orange, two-column]
   [Join today, orange, single-column]
   [Save money, blue, two-column]
+```
+
+### Number systems tour
+
+`number-systems` - The arithmetic behind ranking: factoradic, combinadic and derangadic digits, with every printed claim recomputed by code.
+
+Source: [`tour/NumberSystems.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/NumberSystems.java)
+
+```
+Factoradic
+  10 = [1, 2, 0, 0] = 1*3! + 2*2! + 0*1! + 0*0! = 10
+  read as a Lehmer code over 4 items: [1, 3, 0, 2]
+  the library's permutation of rank 10: [1, 3, 0, 2]
+
+Combinadic, degree 3
+  7 = [4, 3, 0] = C(4,3) + C(3,2) + C(0,1) = 7
+
+Derangadic, 5 items
+  derangements in total: 44
+  rank 20 via the number system: [2, 4, 3, 0, 1]
+  rank 20 via the builder      : [2, 4, 3, 0, 1]
+```
+
+### Sampling: choice versus sample
+
+`sampling` - Random draws without generating the space: `choice` repeats like dice, `sample` never repeats like dealt cards.
+
+Source: [`tour/Sampling.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/Sampling.java)
+
+```
+Two dice: 36 possible rolls
+
+choice(36), seed 42 : 21 different rolls in 36 draws (repeats are expected)
+  first five: [[4, 2], [5, 5], [1, 6], [4, 5], [4, 4]]
+sample(36), seed 42 : 36 different rolls in 36 draws (every roll exactly once, in random order)
+  first five: [[5, 3], [6, 5], [1, 3], [2, 3], [3, 2]]
+
+sample(37) is refused: Sample size (37) cannot exceed max (36)
+Same seed, same draw: true
+```
+
+### Selections: four ways to pick
+
+`selections` - Picking r of n with or without order and repeats, a bag with limited stock, and the library counts checked against the formulas.
+
+Source: [`tour/Selections.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/Selections.java)
+
+```
+Picking 2 of [A, B, C]
+  order matters, no repeats (6): [[A, B], [A, C], [B, A], [B, C], [C, A], [C, B]]
+  order matters, repeats allowed (9): [[A, A], [A, B], [A, C], [B, A], [B, B], [B, C], [C, A], [C, B], [C, C]]
+  order ignored, no repeats (3): [[A, B], [A, C], [B, C]]
+  order ignored, repeats allowed (6): [[A, A], [A, B], [A, C], [B, B], [B, C], [C, C]]
+
+Picking 2 from the bag {A=2, B=1, C=1} (item -> number taken):
+  [{A=2}, {A=1, B=1}, {A=1, C=1}, {B=1, C=1}]
+
+Picking 3 of 6 items: library count vs formula
+  order matters, no repeats        120  formula  120  equal
+  order matters, repeats allowed   216  formula  216  equal
+  order ignored, no repeats         20  formula   20  equal
+  order ignored, repeats allowed    56  formula   56  equal
+```
+
+### Constrained products: the pizza
+
+`constrained-products` - Choices from several pools, each with its own rule, counted, listed and jumped into.
+
+Source: [`tour/ConstrainedProducts.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/tour/ConstrainedProducts.java)
+
+```
+Pizza: 1 base of 3, 2 different cheeses of 3, 2 sauces of 3 (repeats allowed), 1 to 3 toppings of 4
+Pizzas: 756 (formula: 756)
+
+First three:
+  Small, cheese Ricotta + Mozzarella, sauce Tomato + Tomato, toppings tomato
+  Small, cheese Ricotta + Mozzarella, sauce Tomato + Tomato, toppings capsicum
+  Small, cheese Ricotta + Mozzarella, sauce Tomato + Tomato, toppings onion
+Pizza at position 500 (counting from 0), reached directly:
+  Medium, cheese Mozzarella + Cheddar, sauce Green + Green, toppings tomato + capsicum + onion
+Every 250th pizza:
+  Small, cheese Ricotta + Mozzarella, sauce Tomato + Tomato, toppings tomato
+  Small, cheese Mozzarella + Cheddar, sauce Green + Green, toppings tomato + onion + paneer
+  Medium, cheese Mozzarella + Cheddar, sauce Green + Green, toppings tomato + capsicum + onion
+  Large, cheese Mozzarella + Cheddar, sauce Green + Green, toppings capsicum + paneer
+
+1 to 5 toppings of 4 is refused: Invalid range: to cannot exceed 4
+```
+
+### Round-robin tournament
+
+`round-robin-tournament` - A valid round-robin schedule, checked against the library's pairings.
+
+Source: [`usecases/scheduling/RoundRobinTournament.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/scheduling/RoundRobinTournament.java)
+
+```
+6 teams: 15 matches, 5 rounds of 3
+  Round 1: [Lions v Hawks, Tigers v Eagles, Bears v Wolves]
+  Round 2: [Lions v Eagles, Hawks v Wolves, Tigers v Bears]
+  Round 3: [Lions v Wolves, Eagles v Bears, Hawks v Tigers]
+  Round 4: [Lions v Bears, Wolves v Tigers, Eagles v Hawks]
+  Round 5: [Lions v Tigers, Bears v Hawks, Wolves v Eagles]
+
+Every pairing played exactly once (checked against the library's pairings): true
+Every team plays once in every round                                    : true
+
+ 8 teams:  28 matches in  7 rounds
+12 teams:  66 matches in 11 rounds
+20 teams: 190 matches in 19 rounds
+```
+
+### Dice simulation
+
+`dice-simulation` - Exact two-dice distribution by enumeration versus a seeded simulation.
+
+Source: [`usecases/statistics/DiceSimulation.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/statistics/DiceSimulation.java)
+
+```
+Two dice: 36 rolls, enumerated; then 10000 simulated rolls (seed 42)
+  total  ways   exact  simulated   error
+      2     1   2.78%      2.63%  -0.15
+      3     2   5.56%      5.46%  -0.10
+      4     3   8.33%      8.34%  +0.01
+      5     4  11.11%     11.39%  +0.28
+      6     5  13.89%     13.52%  -0.37
+      7     6  16.67%     16.87%  +0.20
+      8     5  13.89%     14.25%  +0.36
+      9     4  11.11%     11.32%  +0.21
+     10     3   8.33%      8.24%  -0.09
+     11     2   5.56%      5.32%  -0.24
+     12     1   2.78%      2.66%  -0.12
+
+Largest error in percentage points, by number of simulated rolls:
+        100 rolls: 5.111
+     10,000 rolls: 0.369
+  1,000,000 rolls: 0.058
+```
+
+### PowerBall tickets
+
+`powerball` - Five white balls plus one red: a combination joined with a single pick, with the prize-tier odds adding up to the total.
+
+Source: [`usecases/lottery/PowerBall.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/lottery/PowerBall.java)
+
+```
+Tickets: 292201338 = C(69,5) x 26
+
+Prize tier   tickets for one draw   probability   1 in
+  5 + red              1       0.00000034%   292,201,338.00
+  5                   25       0.00000856%   11,688,053.52
+  4 + red            320       0.00010951%   913,129.18
+  4                 8000       0.00273784%   36,525.17
+  3 + red          20160       0.00689935%   14,494.11
+  3               504000       0.17248381%   579.76
+  2 + red         416640       0.14258662%   701.33
+  2             10416000       3.56466540%   28.05
+  1 + red        3176880       1.08722295%   91.98
+  1             79422000       27.18057369%   3.68
+  0 + red        7624512       2.60933507%   38.32
+  0            190612800       65.23337686%   1.53
+Tiers add up to all tickets: true
+
+First ticket        : [1, 2, 3, 4, 5, 1]
+Last ticket         : [65, 66, 67, 68, 69, 26]
+Ticket 100,000,000  : [6, 14, 17, 42, 63, 23]
+Quick pick (seed 42): [6, 16, 23, 31, 52, 1]
+```
+
+### Stratified survey sample
+
+`stratified-survey` - A 16-person survey that mirrors the company, drawn without listing quadrillions of possible samples.
+
+Source: [`usecases/statistics/StratifiedSurvey.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/statistics/StratifiedSurvey.java)
+
+```
+Company: 40 engineering, 25 sales, 15 support = 80 people; survey of 16 (8 + 5 + 3)
+Possible simple random samples: 26958221130508525
+Possible stratified samples   : 1859105390892750
+
+A stratified sample (seed 42): [ENG-04, ENG-11, ENG-12, ENG-15, ENG-18, ENG-19, ENG-22, ENG-28, SALES-04, SALES-06, SALES-07, SALES-08, SALES-23, SUPPORT-05, SUPPORT-06, SUPPORT-08]
+  engineering 8, sales 5, support 3
+
+Engineers in 1000 simple random samples: from 3 to 14 (the fair share is 8)
+Engineers in every stratified sample    : exactly 8
+```
+
+### Subset encoding
+
+`subset-encoding` - Store 8 of 64 permissions as one 33-bit number instead of a 64-bit mask.
+
+Source: [`usecases/storage/SubsetEncoding.java`](src/main/java/io/github/deepeshpatel/jnumbertools/examples/usecases/storage/SubsetEncoding.java)
+
+```
+Permissions held (8 of 64): [2, 5, 11, 20, 33, 41, 50, 63]
+Stored as the number      : 3977517843
+Restored from the number  : [2, 5, 11, 20, 33, 41, 50, 63]
+
+Bits needed to store a subset
+   8 of 64  :  33 bits as a number,   64 bits as a bitmask (4426165368 subsets)
+  12 of 100 :  50 bits as a number,  100 bits as a bitmask (1050421051106700 subsets)
+  10 of 1000:  78 bits as a number, 1000 bits as a bitmask (263409560461970212832400 subsets)
+
+All 792 subsets of 5 from 12 get the numbers 0..791 exactly once: true
 ```
 
 ## Project layout

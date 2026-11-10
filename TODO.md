@@ -59,6 +59,7 @@ Ranking and number systems
 - [ ] First release: set `1.0.0` (no SNAPSHOT) before `mvn clean deploy -Prelease`
 
 ## Tour and use cases ported from the old in-library examples
+- [x] All six registered in `Examples.java` and documented in the README (ids `number-systems`, `sampling`, `selections`, `constrained-products`, `round-robin-tournament`, `dice-simulation`)
 Tour (API areas)
 - [x] `tour/NumberSystems`: factoradic, combinadic, derangadic, every printed claim recomputed
 - [x] `tour/Sampling`: `choice` (with replacement) vs `sample` (distinct)
@@ -67,12 +68,14 @@ Tour (API areas)
 Use cases
 - [x] `usecases/scheduling/RoundRobinTournament`: a valid round-robin schedule, checked against the library's pairings
 - [x] `usecases/statistics/DiceSimulation`: exact distribution by enumeration vs a seeded simulation
+New use cases
+- [x] `RegistryCompletenessTest`: fails when a class with `run()` is not registered (this is how the six unregistered examples slipped through)
+- [x] `usecases/lottery/PowerBall`: combination x single pick, prize tiers add up to the total
+- [x] `usecases/statistics/StratifiedSurvey`: quotas per stratum, drawn without listing the space
+- [x] `usecases/storage/SubsetEncoding`: k-subset as one number via the combinadic system
 Not ported yet
-- [ ] Stratified survey sampling, PowerBall (combination x single pick), pairwise coverage of an every-Mth subset, stream integration
+- [ ] Pairwise coverage of an every-Mth subset, stream integration
 Dropped on purpose: the templated "product of invented lists" examples, the timing benchmark, and the old "pairwise" example (it was not pairwise).
-
-## Optional
-- [ ] Encode a subset as one integer with `combinadic` (`numberSystem().combinadic(..)`)
 
 ## Decisions
 - Examples consume only the public builder API plus `Calculator`.

@@ -17,6 +17,15 @@ import io.github.deepeshpatel.jnumbertools.examples.lottery.LotteryOdds;
 import io.github.deepeshpatel.jnumbertools.examples.security.KeyspacePartitioning;
 import io.github.deepeshpatel.jnumbertools.examples.storage.CompactPermutationStorage;
 import io.github.deepeshpatel.jnumbertools.examples.testing.CrossPlatformTestMatrix;
+import io.github.deepeshpatel.jnumbertools.examples.tour.ConstrainedProducts;
+import io.github.deepeshpatel.jnumbertools.examples.tour.NumberSystems;
+import io.github.deepeshpatel.jnumbertools.examples.tour.Sampling;
+import io.github.deepeshpatel.jnumbertools.examples.tour.Selections;
+import io.github.deepeshpatel.jnumbertools.examples.usecases.lottery.PowerBall;
+import io.github.deepeshpatel.jnumbertools.examples.usecases.scheduling.RoundRobinTournament;
+import io.github.deepeshpatel.jnumbertools.examples.usecases.statistics.DiceSimulation;
+import io.github.deepeshpatel.jnumbertools.examples.usecases.statistics.StratifiedSurvey;
+import io.github.deepeshpatel.jnumbertools.examples.usecases.storage.SubsetEncoding;
 
 import java.util.List;
 
@@ -61,7 +70,34 @@ public final class Examples {
                     CommitteeSelection::run),
             new Example("ab-test-design", "experiments",
                     "18 landing-page variants: stable per-visitor assignment by rank, and a seeded pilot set",
-                    AbTestDesign::run)
+                    AbTestDesign::run),
+            new Example("number-systems", "tour",
+                    "Factoradic, combinadic and derangadic: the arithmetic behind ranking, with every claim recomputed",
+                    NumberSystems::run),
+            new Example("sampling", "tour",
+                    "choice (with replacement) versus sample (distinct) without generating the space",
+                    Sampling::run),
+            new Example("selections", "tour",
+                    "Picking r of n: ordered or not, with or without repeats, plus a bag with limited stock",
+                    Selections::run),
+            new Example("constrained-products", "tour",
+                    "The pizza: choices from several pools with their own rules, counted, listed and jumped into",
+                    ConstrainedProducts::run),
+            new Example("round-robin-tournament", "scheduling",
+                    "A valid round-robin schedule, checked against the library's pairings",
+                    RoundRobinTournament::run),
+            new Example("dice-simulation", "statistics",
+                    "Exact two-dice distribution by enumeration versus a seeded simulation",
+                    DiceSimulation::run),
+            new Example("powerball", "lottery",
+                    "Five white balls plus one red: a combination joined with a single pick, with prize-tier odds",
+                    PowerBall::run),
+            new Example("stratified-survey", "statistics",
+                    "A 16-person survey that mirrors the company, drawn without listing the sample space",
+                    StratifiedSurvey::run),
+            new Example("subset-encoding", "storage",
+                    "Store 8 of 64 permissions as one 33-bit number with the combinadic number system",
+                    SubsetEncoding::run)
     );
 
     private Examples() {
